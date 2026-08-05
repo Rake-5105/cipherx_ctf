@@ -1,0 +1,4 @@
+# Fallback flag file. The app reads this only when the FLAG environment
+# variable is not set. To override, set FLAG in the environment or in a
+# .env file (preferred for production deployments).
+C1X{k4r1k4l4n_mud1ra1_f0rg3d}
