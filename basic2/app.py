@@ -35,7 +35,16 @@ def _load_flag() -> str:
     )
 
 
+from jinja2 import FileSystemLoader
+
 app = Flask(__name__, template_folder=str(BASE_DIR / "templates"))
+app.jinja_loader = FileSystemLoader([
+    str(BASE_DIR / "templates"),
+    str(Path.cwd() / "templates"),
+    "/var/task/templates",
+    "/var/task/deploy/templates",
+    str(BASE_DIR),
+])
 
 # Resolved at import time. Never sent to the client unless the request
 # passes the authorization check on /kalanjiyam/inner-chamber.
