@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>404 Not Found</title>
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f3f3f3;
+    color: #444;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    width: 800px;
+    margin: 80px auto;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 30px 40px;
+  }
+  h1 {
+    font-weight: 300;
+    font-size: 32px;
+    color: #333;
+    margin: 0 0 20px 0;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 16px 0;
+  }
+  h2 {
+    font-weight: 400;
+    font-size: 18px;
+    color: #555;
+    margin: 0 0 12px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+  }
+  /* r`)LE9`D0`D0G2?2?82=0E9`CF<0<FC2`0Db4CbEN */
+  th {
+    width: 160px;
+    color: #666;
+    font-weight: 600;
+  }
+  .footer {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #888;
+  }
+  .badge {
+    display: inline-block;
+    background: #d9534f;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>HTTP Error 404. The requested resource is not found.</h1>
+    <hr>
+    <h2>Detailed Error Information:</h2>
+    <table>
+      <tr>
+        <th>Module</th>
+        <td>IIS Web Core</td>
+      </tr>
+      <tr>
+        <th>Notification</th>
+        <td>MapRequestHandler</td>
+      </tr>
+      <tr>
+        <th>Handler</th>
+        <td>StaticFile</td>
+      </tr>
+      <tr>
+        <th>Error Code</th>
+        <td>0x80070002</td>
+      </tr>
+    </table>
+    <div class="footer">
+      <span class="badge">404</span> &nbsp; The page you are looking for cannot be found. It may have been moved, renamed, or is temporarily unavailable.
+    </div>
+    <!-- Hint: view source for the shift that wraps through the printable range. -->
+    <div id="archive-seal" style="display:none"></div>
+  </div>
+  <script>
+    const flagOriginal = "C1X{th1s_1s_vanangal_th1ruk_kura1_s3cr3t}";
+
+    function encodePrintableShift(text) {
+      return Array.from(text, function (character) {
+        const code = character.charCodeAt(0);
+        if (code < 33 || code > 126) {
+          return character;
+        }
+        return String.fromCharCode(33 + ((code - 33 + 47) % 94));
+      }).join("");
+    }
+
+    document.getElementById("archive-seal").textContent = encodePrintableShift(flagOriginal);
+  </script>
+</body>
+</html>
