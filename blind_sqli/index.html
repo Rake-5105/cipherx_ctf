@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,8 +8,11 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&family=VT323&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
   <main class="wrap">
 
@@ -34,12 +38,14 @@
         <article class="panel">
           <div class="panel-icon">⌘</div>
           <h3>SQLITE BACKEND</h3>
-          <p>Lightweight file-based DB. Use <code>sqlite_master</code> and <code>pragma_table_info</code> to enumerate.</p>
+          <p>Lightweight file-based DB. Use <code>sqlite_master</code> and <code>pragma_table_info</code> to enumerate.
+          </p>
         </article>
         <article class="panel">
           <div class="panel-icon">_</div>
           <h3>TIME-BASED ORACLE</h3>
-          <p>No <code>SLEEP()</code> in SQLite — induce delay with <code>randomblob()</code> under a <code>CASE WHEN</code>.</p>
+          <p>No <code>SLEEP()</code> in SQLite — induce delay with <code>randomblob()</code> under a
+            <code>CASE WHEN</code>.</p>
         </article>
         <article class="panel">
           <div class="panel-icon">⌬</div>
@@ -56,7 +62,8 @@
         </p>
         <form class="lookup-form" id="lookup-form" autocomplete="off">
           <span class="prompt">user@cipherx:~$</span>
-          <input type="text" name="username" id="username-input" placeholder="lookup --user=admin" aria-label="username" required />
+          <input type="text" name="username" id="username-input" placeholder="lookup --user=admin" aria-label="username"
+            required />
           <button type="submit">EXECUTE</button>
         </form>
         <div class="result" id="lookup-result" style="display: none;"></div>
@@ -99,4 +106,5 @@
     })();
   </script>
 </body>
+
 </html>
