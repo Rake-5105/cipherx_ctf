@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/**/*.py": {
+      "includeFiles": ["templates/**", "static/**", "db_backup.sqlite"]
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
