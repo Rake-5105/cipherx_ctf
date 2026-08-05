@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ponni Kalanjiyam - Outer Hall</title>
+  <style>
+    :root {
+      --ink: #2c1d12;
+      --deep-ink: #1a1008;
+      --sand: #f4e7c8;
+      --parchment: #fbf3dd;
+      --bronze: #8b5e34;
+      --gold: #c7a24a;
+      --clay: #b46a3c;
+      --shadow: rgba(48, 28, 12, 0.24);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top, rgba(199, 162, 74, 0.22), transparent 32%),
+        linear-gradient(180deg, #20130d 0%, #3a2314 16%, #f0dfb6 16%, #ead4a0 100%);
+      padding: 32px 18px 40px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(135deg, rgba(180, 106, 60, 0.08) 25%, transparent 25%, transparent 50%, rgba(180, 106, 60, 0.08) 50%, rgba(180, 106, 60, 0.08) 75%, transparent 75%, transparent);
+      background-size: 42px 42px;
+      opacity: 0.3;
+      mix-blend-mode: multiply;
+    }
+
+    .container {
+      position: relative;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 34px 30px 30px;
+      background: linear-gradient(180deg, rgba(251, 243, 221, 0.98), rgba(244, 231, 200, 0.98));
+      border: 1px solid rgba(139, 94, 52, 0.35);
+      border-radius: 22px;
+      box-shadow: 0 24px 48px var(--shadow);
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(139, 94, 52, 0.18);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      color: var(--deep-ink);
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      letter-spacing: 0.03em;
+      line-height: 1.05;
+    }
+
+    .subtitle {
+      margin: 0 0 24px;
+      color: #634028;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .panel {
+      position: relative;
+      margin: 20px 0;
+      padding: 18px 20px;
+      background: rgba(255, 250, 236, 0.85);
+      border-left: 6px solid var(--gold);
+      border-radius: 14px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      color: var(--bronze);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hint {
+      background: linear-gradient(180deg, rgba(199, 162, 74, 0.12), rgba(180, 106, 60, 0.08));
+    }
+
+    p {
+      font-size: 1.04rem;
+      line-height: 1.8;
+      margin: 0 0 16px;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 24px 0 18px;
+      background: linear-gradient(90deg, transparent, rgba(139, 94, 52, 0.65), transparent);
+    }
+
+    .crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 236, 0.75);
+      color: var(--bronze);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .crest::before,
+    .crest::after {
+      content: "✦";
+      color: var(--gold);
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 18px 12px 28px; }
+      .container { padding: 24px 18px 18px; border-radius: 18px; }
+      p { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="crest">Ponni Kalanjiyam</div>
+    <h1>Outer Hall of the Bronze Archives</h1>
+    <p class="subtitle">Before the sacred vault, visitors enter a hall of carved stone, copper lamps, and archival seals. The outer chamber preserves the memory of the Chola waterworks, where every channel was measured like a hymn and every gate was built to resist the flood.</p>
+
+    <div class="panel hint">
+      <h2>Gatekeeper's note</h2>
+      <p>
+        The bronze gate remembers the <em>mark</em> of every wayfarer who passes, not their face. Palms that bear no seal are turned away at the threshold; palms that bear the <em>forged mark</em> are admitted without question, for the gate trusts what it is given.
+      </p>
+      <p>
+        Those who walk the old courts know that the mark is something the wayfarer carries in their own hand, slipped quietly into the pouch at the threshold &mdash; never spoken aloud, never written into the ledger. Forge it well, and the bronze gate will yield.
+      </p>
+    </div>
+
+    <p>
+      Beyond the bronze threshold lies the chamber said to hold the king's hidden seal, copied from the river plans of Karikala and guarded by those who know the old names of power. Only the properly marked may enter.
+    </p>
+    <div class="divider"></div>
+    <p>
+      In the lore of this vault, the chamber answers only to a forged mark. Those who understand the old administration of the river granaries know that the seal is not steel, but belief made visible &mdash; and that the court, in its pride, never learned to question what it was handed.
+    </p>
+  </div>
+</body>
+</html>
