@@ -4,10 +4,10 @@
       "includeFiles": "{templates/**,static/**,db_backup.sqlite}"
     }
   },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/api/index"
+      "src": "/(.*)",
+      "dest": "/api/index"
     }
   ]
 }
