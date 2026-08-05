@@ -23,7 +23,9 @@ def _load_flag() -> str:
 
     fallback = BASE_DIR / "flag.txt"
     if fallback.is_file():
-        return fallback.read_text(encoding="utf-8").strip()
+        lines = [line.strip() for line in fallback.read_text(encoding="utf-8").splitlines() if line.strip() and not line.strip().startswith("#")]
+        if lines:
+            return lines[-1]
 
     raise RuntimeError(
         "FLAG is not configured. Set the FLAG environment variable or create "
