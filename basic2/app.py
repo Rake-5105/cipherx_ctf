@@ -35,7 +35,7 @@ def _load_flag() -> str:
     )
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=str(BASE_DIR / "templates"))
 
 # Resolved at import time. Never sent to the client unless the request
 # passes the authorization check on /kalanjiyam/inner-chamber.
