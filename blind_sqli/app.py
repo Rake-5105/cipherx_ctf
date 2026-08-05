@@ -34,7 +34,11 @@ FAKE_USERS = [
     ("admin", FLAG_HASH, 1),
 ]
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder=str(BASE_DIR / "templates"),
+    static_folder=str(BASE_DIR / "static")
+)
 app.config.update(
     DEBUG=False,
     TESTING=False,
