@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blind SQLi Challenge</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main class="wrap">
+
+    <section class="hero">
+      <h1 class="dot-title dot-title-white">B1IND SQ1i</h1>
+      <p class="subtitle">
+        Challenge Your Mind. Break the Code.
+      </p>
+    </section>
+
+    <section class="features" id="lookup">
+      <div class="features-head">
+        <span class="features-label">// CHALLENGE</span>
+        <span class="features-line"></span>
+      </div>
+
+      <div class="features-grid">
+        <article class="panel">
+          <div class="panel-icon">⚡</div>
+          <h3>BLIND SQLI</h3>
+          <p>Extract data through boolean and timing oracles when no direct output is leaked.</p>
+        </article>
+        <article class="panel">
+          <div class="panel-icon">⌘</div>
+          <h3>SQLITE BACKEND</h3>
+          <p>Lightweight file-based DB. Use <code>sqlite_master</code> and <code>pragma_table_info</code> to enumerate.</p>
+        </article>
+        <article class="panel">
+          <div class="panel-icon">_</div>
+          <h3>TIME-BASED ORACLE</h3>
+          <p>No <code>SLEEP()</code> in SQLite — induce delay with <code>randomblob()</code> under a <code>CASE WHEN</code>.</p>
+        </article>
+        <article class="panel">
+          <div class="panel-icon">⌬</div>
+          <h3>BASE64 FLAG</h3>
+          <p>Recover the admin row's <code>password_hash</code> character by character, then base64-decode the flag.</p>
+        </article>
+      </div>
+
+      <article class="panel lookup-panel">
+        <div class="section-label">// USER LOOKUP</div>
+        <p class="lookup-blurb">
+          Submit a username. The query is interpolated directly into SQLite.
+          The page only reveals <em>found</em> or <em>not found</em>.
+        </p>
+        <form class="lookup-form" id="lookup-form" autocomplete="off">
+          <span class="prompt">user@cipherx:~$</span>
+          <input type="text" name="username" id="username-input" placeholder="lookup --user=admin" aria-label="username" required />
+          <button type="submit">EXECUTE</button>
+        </form>
+        <div class="result" id="lookup-result" style="display: none;"></div>
+        <div class="challenge-info">நன்றி ! வணக்கம் !</div>
+      </article>
+
+      <div class="footer-note">
+        &middot; Team CyberSec &middot;
+      </div>
+      <div class="author-credit">r4k3</div>
+    </section>
+
+  </main>
+
+  <script>
+    (function () {
+      const form = document.getElementById('lookup-form');
+      const input = document.getElementById('username-input');
+      const resultEl = document.getElementById('lookup-result');
+      if (!form) return;
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const username = input.value;
+        resultEl.textContent = '> querying...';
+        resultEl.style.display = 'block';
+
+        try {
+          const response = await fetch('/lookup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'username=' + encodeURIComponent(username)
+          });
+          const data = await response.json();
+          resultEl.textContent = '> ' + data.result;
+        } catch (err) {
+          resultEl.textContent = '> User not found';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

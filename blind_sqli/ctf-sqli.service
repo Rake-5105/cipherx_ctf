@@ -1,0 +1,22 @@
+[Unit]
+Description=Cipherx CTF Blind SQLi Challenge
+After=network.target
+
+[Service]
+Type=simple
+User=ctf-sqli
+Group=www-data
+WorkingDirectory=/home/ctf-sqli/app
+Environment="PYTHONUNBUFFERED=1"
+Environment="PATH=/home/ctf-sqli/venv/bin"
+RuntimeDirectory=ctf-sqli
+RuntimeDirectoryMode=0755
+ExecStart=/home/ctf-sqli/venv/bin/gunicorn --workers 2 --bind unix:/run/ctf-sqli/gunicorn.sock --access-logfile - --error-logfile - app:app
+Restart=always
+RestartSec=3
+UMask=0027
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
