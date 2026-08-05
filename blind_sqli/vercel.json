@@ -1,20 +1,12 @@
 {
   "functions": {
     "api/**/*.py": {
-      "includeFiles": "{templates/**,static/**,db_backup.sqlite}"
+      "includeFiles": "db_backup.sqlite"
     }
   },
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/static/favicon.ico"
-    },
-    {
-      "src": "/",
+      "src": "/(.*)",
       "dest": "/api/index"
     }
   ]
