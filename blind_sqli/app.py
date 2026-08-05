@@ -9,13 +9,16 @@ from flask import Flask, jsonify, render_template, request
 
 import os
 
+import tempfile
+import traceback
+
 BASE_DIR = Path(__file__).resolve().parent
 
-# On Vercel, the filesystem is read-only except for /tmp.
-if os.environ.get("VERCEL"):
-    DB_PATH = Path("/tmp/ctf_sqli.sqlite3")
-else:
+# Check if the deployment directory is writable (Vercel is read-only)
+if os.access(BASE_DIR, os.W_OK):
     DB_PATH = BASE_DIR / "ctf_sqli.sqlite3"
+else:
+    DB_PATH = Path(tempfile.gettempdir()) / "ctf_sqli.sqlite3"
 
 BACKUP_DB_PATH = BASE_DIR / "db_backup.sqlite"
 
@@ -39,39 +42,40 @@ app.config.update(
     TEMPLATES_AUTO_RELOAD=False,
 )
 
-
 def init_database() -> None:
     """Create the SQLite database and seed rows if needed."""
-    database_exists = DB_PATH.exists()
+    try:
+        database_exists = DB_PATH.exists()
 
-    # If running on Vercel and the DB doesn't exist in /tmp yet, try copying the bundled backup.
-    if os.environ.get("VERCEL") and not database_exists and BACKUP_DB_PATH.exists():
-        shutil.copyfile(BACKUP_DB_PATH, DB_PATH)
-        database_exists = True
+        # If we are using a temp dir, try to restore from bundled backup first
+        if not os.access(BASE_DIR, os.W_OK) and not database_exists and BACKUP_DB_PATH.exists():
+            shutil.copyfile(BACKUP_DB_PATH, DB_PATH)
+            database_exists = True
 
-    with sqlite3.connect(DB_PATH) as connection:
-        connection.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NOT NULL UNIQUE,
-                password_hash TEXT NOT NULL,
-                is_admin INTEGER NOT NULL DEFAULT 0
-            )
-        """)
+        with sqlite3.connect(DB_PATH) as connection:
+            connection.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT NOT NULL UNIQUE,
+                    password_hash TEXT NOT NULL,
+                    is_admin INTEGER NOT NULL DEFAULT 0
+                )
+            """)
 
-        count = connection.execute("SELECT COUNT(*) FROM users").fetchone()[0]
-        if count == 0:
-            connection.executemany(
-                "INSERT INTO users (username, password_hash, is_admin) VALUES (?, ?, ?)",
-                FAKE_USERS,
-            )
-            connection.commit()
+            count = connection.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+            if count == 0:
+                connection.executemany(
+                    "INSERT INTO users (username, password_hash, is_admin) VALUES (?, ?, ?)",
+                    FAKE_USERS,
+                )
+                connection.commit()
 
-    # Locally, if there is no backup DB, create one from the seeded DB.
-    # We skip this on Vercel because the deployment folder is read-only.
-    if not os.environ.get("VERCEL") and (not BACKUP_DB_PATH.exists() or not database_exists):
-        shutil.copyfile(DB_PATH, BACKUP_DB_PATH)
-
+        # Save a backup locally if the directory is writable
+        if os.access(BASE_DIR, os.W_OK) and (not BACKUP_DB_PATH.exists() or not database_exists):
+            shutil.copyfile(DB_PATH, BACKUP_DB_PATH)
+    except Exception as e:
+        print(f"Database initialization failed: {e}")
+        traceback.print_exc()
 
 init_database()
 
