@@ -1,5 +1,13 @@
 {
   "version": 2,
+  "functions": {
+    "app.py": {
+      "includeFiles": "templates/**"
+    },
+    "api/**/*.py": {
+      "includeFiles": "templates/**"
+    }
+  },
   "builds": [
     {
       "src": "app.py",
