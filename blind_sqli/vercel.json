@@ -4,6 +4,9 @@
       "includeFiles": "{templates/**,static/**,db_backup.sqlite}"
     }
   },
+  "static": {
+    "directory": "static"
+  },
   "routes": [
     {
       "src": "/",
