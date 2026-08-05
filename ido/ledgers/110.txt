@@ -1,0 +1,5 @@
+Tyndis silk factor
+Raw silk -- 24 bales; brocade offcuts -- 6 bales
+Broker: Abira, the Kananur factor
+Tariff: 4 bales of raw silk, 1 of brocade
+Visibility: public

@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ledger #{{ ledger_id }} -- Muciri Customs</title>
+  <style>
+    :root {
+      --bg: #100407;
+      --panel: rgba(31, 7, 12, 0.94);
+      --panel-strong: rgba(23, 4, 8, 0.98);
+      --text: #edf6ff;
+      --muted: #95a9c0;
+      --accent: #ff6d7b;
+      --accent-2: #ffaf73;
+      --danger: #ff7f9a;
+      --border: rgba(255, 109, 123, 0.2);
+      --shadow: rgba(14, 0, 4, 0.75);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 16% 16%, rgba(220, 43, 62, 0.17), transparent 24%),
+        radial-gradient(circle at 88% 12%, rgba(255, 130, 76, 0.11), transparent 21%),
+        linear-gradient(180deg, #090103 0%, #1a0509 100%);
+      padding: 22px 24px 36px;
+    }
+
+    .container {
+      position: relative;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 26px;
+      background: linear-gradient(180deg, rgba(3, 12, 22, 0.99), rgba(2, 8, 15, 0.99));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: 0 34px 78px var(--shadow);
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 22px;
+      pointer-events: none;
+    }
+
+    .manifest-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .rail,
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .rail {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(7, 17, 29, 0.98), rgba(12, 31, 47, 0.92));
+      border: 1px solid var(--border);
+    }
+
+    .content {
+      padding: 8px 6px 0 6px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      color: #ffffff;
+      font-size: clamp(2.2rem, 4.6vw, 4rem);
+      letter-spacing: -0.04em;
+      line-height: 0.96;
+    }
+
+    p {
+      font-size: 1.03rem;
+      line-height: 1.9;
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(105, 240, 210, 0.08);
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .crest::before,
+    .crest::after {
+      content: "◈";
+      color: var(--accent-2);
+    }
+
+    .meta {
+      font-family: "Consolas", "Courier New", monospace;
+      color: var(--muted);
+      font-size: 0.92rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+    }
+
+    .visibility {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .visibility.public {
+      background: rgba(105, 240, 210, 0.12);
+      color: var(--accent);
+    }
+
+    .visibility.private {
+      background: rgba(255, 191, 102, 0.12);
+      color: var(--accent-2);
+    }
+
+    .visibility.sealed {
+      background: linear-gradient(180deg, rgba(6, 14, 26, 0.96), rgba(10, 24, 37, 0.96));
+      color: #ffffff;
+      border: 1px solid rgba(255, 191, 102, 0.35);
+    }
+
+    .ledger {
+      position: relative;
+      margin: 18px 0;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      font-family: "Georgia", serif;
+      font-size: 1.04rem;
+      line-height: 1.95;
+      color: var(--text);
+    }
+
+    .ledger.flagged {
+      color: #f6fbff;
+    }
+
+    .ledger-shell {
+      padding: 22px 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 22px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .ledger-lines {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+    }
+
+    .flag-line {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(105, 240, 210, 0.14), rgba(255, 191, 102, 0.1));
+      font-family: "Consolas", "Courier New", monospace;
+      letter-spacing: 0.14em;
+      word-break: break-word;
+    }
+
+    .ledger-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .tamil {
+      font-family: "Latha", "Tamil Sangam MN", serif;
+      color: var(--accent-2);
+      font-style: italic;
+    }
+
+    .verse {
+      text-align: center;
+      color: var(--muted);
+      font-style: italic;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 24px 0 18px;
+      background: linear-gradient(90deg, transparent, rgba(105, 240, 210, 0.5), transparent);
+    }
+
+    .whisper {
+      margin: 14px 0 0;
+      color: var(--accent-2);
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+
+    .back-link {
+      color: var(--accent-2);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 14px 10px 24px; }
+      .container { padding: 16px; border-radius: 22px; }
+      .manifest-grid { grid-template-columns: 1fr; }
+      .rail { padding: 14px; }
+      .ledger-shell { padding: 18px 16px; }
+      p { font-size: 1rem; }
+    }
+    .container { animation: rise-in .7s ease-out both; }
+    .rail { animation: slide-in .65s ease-out both; }
+    .ledger-shell { animation: reveal .8s .12s ease-out both; transition: transform .25s ease, border-color .25s ease; }
+    .ledger-shell:hover { transform: translateY(-3px); border-color: rgba(105, 240, 210, .25); }
+    .ledger-badge { animation: pulse 3s ease-in-out infinite; }
+    .back-link { transition: color .2s ease, letter-spacing .2s ease; }
+    .back-link:hover { letter-spacing:.1em; }
+    @keyframes rise-in { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+    @keyframes slide-in { from { opacity:0; transform:translateX(-16px); } to { opacity:1; transform:none; } }
+    @keyframes reveal { from { opacity:0; transform:translateY(12px) scale(.99); } to { opacity:1; transform:none; } }
+    @keyframes pulse { 50% { box-shadow:0 0 18px rgba(105,240,210,.22); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+    .rail { border-color:rgba(255,109,123,.22); background:linear-gradient(180deg,rgba(28,5,10,.99),rgba(57,10,18,.88)); }
+    .visibility.public, .ledger-badge { background:rgba(255,109,123,.12); }
+    .flag-line { background:linear-gradient(135deg,rgba(190,25,47,.18),rgba(255,138,81,.1)); }
+    .divider { background:linear-gradient(90deg,transparent,rgba(255,109,123,.58),transparent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="manifest-grid">
+      <aside class="rail">
+        <div class="crest">Ledger Sheet</div>
+        <h1>Ledger #{{ ledger_id }}</h1>
+        <div class="meta">
+          <span class="visibility {{ visibility }}">{{ visibility }}</span>
+          &nbsp; &mdash; customs house, Muciri, Chera realm
+        </div>
+
+        <div class="panel">
+          <p>
+            This sheet is arranged like a scanned docket: the number first, the ledger status second, and the contents laid out to the right.
+          </p>
+          <p>
+            If you reached this by walking the sequence, you are in the right place.
+          </p>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div class="ledger-shell">
+          <div class="ledger {% if visibility == 'sealed' %}flagged{% endif %}">
+            <div class="ledger-badge">Record contents</div>
+            <pre class="ledger-lines">{{ lines | join('\n') }}</pre>
+          </div>
+
+          {% if 'C1X{' in lines | join('\n') %}
+          <div class="flag-line">Flag located in this ledger.</div>
+          {% endif %}
+        </div>
+
+        {% if visibility == 'private' %}
+        <p class="whisper">
+          <span class="tamil">யாருடையது என்று அறியேன்; என் கண்ணுக்குத் தெரிந்தது எண்ணளவாய் இருந்தது.</span><br>
+          <em>"I do not know whose it is; my eyes were given only a number."</em>
+        </p>
+        {% endif %}
+
+        {% if visibility == 'sealed' %}
+        <p class="verse">
+          <span class="tamil">எண்ணைக் கேட்டால் பதிலளிக்கும் வாயில், உரிமையைக் கேட்பதில்லை.</span><br>
+          <em>"The gate answers to a number. It never asks whose name is on the ledger behind it."</em>
+        </p>
+        {% endif %}
+
+        <div class="divider"></div>
+        <p>
+          <a class="back-link" href="{{ url_for('hall') }}">&larr; back to the records room</a>
+        </p>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+Nakkeeran -- frankincense merchant, northern road
+Frankincense -- 18 baskets; myrrh -- 6 baskets
+Broker: Kollam Vellan
+Tariff: 9 baskets of frankincense, 1 of myrrh
+Visibility: private

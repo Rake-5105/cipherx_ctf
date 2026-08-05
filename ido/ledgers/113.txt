@@ -1,0 +1,5 @@
+Kongu Nallan -- cotton merchant, inland route
+Raw cotton -- 200 maunds; finished cloth -- 40 bolts
+Broker: Self-filed
+Tariff: 10 maunds of cotton, 4 bolts of cloth
+Visibility: public

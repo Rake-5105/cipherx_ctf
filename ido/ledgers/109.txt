@@ -1,0 +1,5 @@
+Kollam Itti Maran -- horse trader
+Arabian horses -- 4; fodder bundles -- 80
+Broker: Self-filed
+Tariff: 2 horses to the Chera house, fodder for the cavalry quarter
+Visibility: public

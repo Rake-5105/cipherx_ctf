@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Records Room -- Muciri Customs</title>
+  <!--
+    The dockyard path is /records. Ledgers themselves are stamped at the
+    customs counter; the counter's stamped-page route is /manifest/<num>.
+    That note is for whoever reads the source. The page itself stays quiet.
+  -->
+  <style>
+    :root {
+      --bg: #05131e;
+      --panel: rgba(9, 24, 39, 0.92);
+      --panel-soft: rgba(13, 32, 49, 0.8);
+      --text: #ecf6ff;
+      --muted: #97aeca;
+      --accent: #7cf7c2;
+      --accent-2: #ffc46a;
+      --accent-3: #67b7ff;
+      --line: rgba(124, 247, 194, 0.14);
+      --shadow: rgba(1, 10, 18, 0.6);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 15%, rgba(124, 247, 194, 0.14), transparent 22%),
+        radial-gradient(circle at 92% 8%, rgba(103, 183, 255, 0.12), transparent 20%),
+        linear-gradient(180deg, #040d15 0%, #071520 100%);
+      padding: 28px 18px 42px;
+    }
+
+    .container {
+      position: relative;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 26px;
+      background: linear-gradient(180deg, rgba(9, 24, 39, 0.94), rgba(6, 17, 28, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: 0 32px 72px var(--shadow);
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 22px;
+      pointer-events: none;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .sidebar,
+    .main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar {
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(7, 21, 32, 0.98), rgba(12, 31, 48, 0.9));
+      border: 1px solid var(--line);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .main {
+      padding: 10px 4px 0 6px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      color: #ffffff;
+      font-size: clamp(2.2rem, 4.8vw, 4rem);
+      letter-spacing: -0.04em;
+      line-height: 0.98;
+    }
+
+    h2 {
+      margin: 6px 0 12px;
+      color: var(--accent);
+      font-size: 0.98rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 1.03rem;
+      line-height: 1.9;
+      margin: 0 0 16px;
+      color: var(--muted);
+    }
+
+    .tamil {
+      font-family: "Latha", "Tamil Sangam MN", serif;
+      color: var(--accent-2);
+      font-style: italic;
+    }
+
+    .crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(124, 247, 194, 0.08);
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .crest::before,
+    .crest::after {
+      content: "◈";
+      color: var(--accent-2);
+    }
+
+    .panel {
+      position: relative;
+      margin: 20px 0;
+      padding: 18px 20px;
+      background: rgba(6, 16, 28, 0.72);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .panel.hint {
+      background: linear-gradient(135deg, rgba(124, 247, 194, 0.08), rgba(103, 183, 255, 0.07));
+    }
+
+    .hint-line {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--accent-2);
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      font-family: "Georgia", serif;
+      overflow: hidden;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--accent);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    tbody tr:hover {
+      background: rgba(124, 247, 194, 0.06);
+    }
+
+    .verse {
+      text-align: center;
+      color: var(--muted);
+      font-style: italic;
+      margin: 0 auto;
+      max-width: 640px;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 24px 0 18px;
+      background: linear-gradient(90deg, transparent, rgba(124, 247, 194, 0.5), transparent);
+    }
+
+    .floating-note {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(103, 183, 255, 0.12), rgba(124, 247, 194, 0.06));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+    }
+
+    .floating-note strong {
+      color: #ffffff;
+    }
+
+    .stamped-note {
+      margin-top: 22px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(124, 247, 194, 0.2);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .stamped-note .label {
+      color: var(--accent-2);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 14px 10px 24px; }
+      .container { padding: 16px; border-radius: 22px; }
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { padding: 14px; }
+      p { font-size: 1rem; }
+    }
+    :root { --bg:#100407; --panel:rgba(31,7,12,.94); --panel-soft:rgba(48,11,18,.84); --accent:#ff7180; --accent-2:#ffad72; --accent-3:#d95168; --line:rgba(255,113,128,.18); }
+    body { padding:22px 24px 36px; background:radial-gradient(circle at 12% 15%,rgba(220,43,62,.17),transparent 25%),radial-gradient(circle at 92% 8%,rgba(255,122,92,.11),transparent 23%),linear-gradient(180deg,#090103,#1b060a); } .container { max-width:1640px; background:linear-gradient(180deg,rgba(3,12,22,.98),rgba(2,9,17,.99)); animation:rise .7s ease-out both; } .sidebar,.panel,.floating-note { border-color:rgba(255,113,128,.2); } .panel.hint,.floating-note { background:linear-gradient(135deg,rgba(170,20,40,.16),rgba(255,125,88,.07)); } tbody tr { transition:background .2s ease,transform .2s ease; } tbody tr:hover { background:rgba(255,113,128,.09); transform:translateX(5px); } @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="crest">Records Room</div>
+        <h1>Hall of Ledgers</h1>
+        <p>
+          The records room is a long, low hall lit by copper lamps. Each merchant's ledger sits on a numbered shelf along the eastern wall. There is no name on the spine -- only the number the customs scribe assigned when the ship docked.
+        </p>
+
+        <div class="panel hint">
+          <h2>The deputy scribe's note</h2>
+          <p>
+            You glance at the counter: the seal-stamp is there, the registry of merchant names is there, but no one uses either. The deputy simply hands a ledger to anyone who asks for it.
+          </p>
+          <div class="hint-line">Ask at the counter</div>
+        </div>
+
+        <div class="floating-note">
+          <strong>Walk the hall.</strong> The merchants are listed below. The number on each spine belongs to the ledger on the shelf, not to anything you can click.
+        </div>
+      </aside>
+
+      <main class="main">
+        <h2>Merchants at the dock</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Merchant</th>
+              <th>Cargo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in ledgers %}
+            <tr>
+              <td>{{ row.title }}</td>
+              <td>{{ row.cargo }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="stamped-note">
+          <div class="label">Stamped at the counter</div>
+          Each ledger is stamped on the counter and retrieved by its slip number. The stamped page lives at a path the scribe keeps between the wharf and the warehouse -- visible to the dockhands, not the public ledger.
+        </div>
+
+        <div class="divider"></div>
+        <p class="verse">
+          <span class="tamil">யாருடையது என்று அறியேன்; என் கண்ணுக்குத் தெரிந்தது எண்ணளவாய் இருந்தது.</span><br>
+          <em>"I do not know whose it is; my eyes were given only a number."</em>
+        </p>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

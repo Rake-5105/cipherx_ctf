@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Muciri Customs -- The Open Ledger</title>
+  <style>
+    :root {
+      --bg: #100407;
+      --bg-soft: #2a0b11;
+      --panel: rgba(31, 7, 12, 0.9);
+      --panel-strong: rgba(22, 4, 8, 0.98);
+      --text: #e9f2ff;
+      --muted: #9fb4ca;
+      --accent: #ff6674;
+      --accent-strong: #ffac75;
+      --line: rgba(255, 102, 116, 0.22);
+      --shadow: rgba(12, 0, 3, 0.72);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 20%, rgba(215, 43, 62, 0.19), transparent 28%),
+        radial-gradient(circle at 85% 14%, rgba(255, 119, 71, 0.12), transparent 24%),
+        linear-gradient(160deg, #090103 0%, #18050a 42%, #260a0e 100%);
+      padding: 22px 24px 36px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(circle at center, black 48%, transparent 100%);
+      opacity: 0.7;
+    }
+
+    .container {
+      position: relative;
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 28px;
+      background: linear-gradient(180deg, rgba(3, 11, 20, 0.98), rgba(4, 14, 25, 0.99));
+      border: 1px solid rgba(110, 231, 216, 0.14);
+      border-radius: 28px;
+      box-shadow: 0 36px 80px var(--shadow);
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 22px;
+      pointer-events: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-copy {
+      padding: 18px 8px 18px 10px;
+    }
+
+    .hero-card {
+      display: grid;
+      align-content: center;
+      padding: 24px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(110, 231, 216, 0.08), rgba(255, 179, 71, 0.06));
+      border: 1px solid rgba(110, 231, 216, 0.16);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      color: #ffffff;
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      letter-spacing: -0.04em;
+      line-height: 0.96;
+    }
+
+    h2 {
+      margin: 6px 0 12px;
+      color: var(--accent);
+      font-size: 1.15rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 1.03rem;
+      line-height: 1.9;
+      margin: 0 0 16px;
+      color: var(--muted);
+    }
+
+    .tamil {
+      font-family: "Latha", "Tamil Sangam MN", serif;
+      color: var(--accent-strong);
+      font-style: italic;
+    }
+
+    .crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(110, 231, 216, 0.08);
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .crest::before,
+    .crest::after {
+      content: "◈";
+      color: var(--accent-strong);
+    }
+
+    .panel {
+      position: relative;
+      margin: 20px 0;
+      padding: 18px 20px;
+      background: rgba(6, 17, 30, 0.72);
+      border: 1px solid rgba(110, 231, 216, 0.12);
+      border-left: 4px solid var(--accent);
+      border-radius: 16px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .panel.hint {
+      background: linear-gradient(135deg, rgba(110, 231, 216, 0.08), rgba(255, 179, 71, 0.06));
+    }
+
+    .panel.entry {
+      text-align: center;
+      background: linear-gradient(180deg, rgba(13, 31, 50, 0.96), rgba(6, 17, 30, 0.96));
+      color: var(--text);
+      border-left-color: var(--accent-strong);
+    }
+
+    .panel.entry a {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 12px 22px;
+      color: #08111d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      border: 0;
+      border-radius: 999px;
+      text-decoration: none;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 24px 0 18px;
+      background: linear-gradient(90deg, transparent, rgba(110, 231, 216, 0.55), transparent);
+    }
+
+    .verse {
+      margin: 0 auto;
+      max-width: 640px;
+      text-align: center;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .stats {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 20px;
+    }
+
+    .stat {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #ffffff;
+      font-size: 1.1rem;
+    }
+
+    .stat span {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 14px 10px 24px; }
+      .container { padding: 16px; border-radius: 22px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { padding: 8px 4px 6px; }
+      .stats { grid-template-columns: 1fr; }
+      p { font-size: 1rem; }
+    }
+    .container { animation: rise-in .7s ease-out both; }
+    .hero-card { animation: glow 4s ease-in-out infinite; }
+    .panel, .stat { transition: transform .25s ease, border-color .25s ease, background .25s ease; }
+    .panel:hover, .stat:hover { transform: translateY(-4px); border-color: rgba(110, 231, 216, .38); background: rgba(16, 38, 58, .82); }
+    .panel.entry a { transition: transform .2s ease, box-shadow .2s ease; }
+    .panel.entry a:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 12px 28px rgba(110, 231, 216, .24); }
+    @keyframes rise-in { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+    @keyframes glow { 50% { box-shadow: 0 0 32px rgba(110, 231, 216, .13), inset 0 1px 0 rgba(255,255,255,.08); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+    .hero-card, .panel.hint { background:linear-gradient(180deg,rgba(112,18,31,.22),rgba(42,6,13,.22)); border-color:rgba(255,102,116,.22); }
+    .crest, .stat { background:rgba(255,102,116,.08); }
+    .divider { background:linear-gradient(90deg,transparent,rgba(255,102,116,.6),transparent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <section class="hero-copy">
+        <div class="crest">Muciri Customs Hall</div>
+        <h1>The Open Ledger</h1>
+        <p>
+          You are a junior scribe at the Chera customs house of <strong>Muciri</strong>, the pepper-and-pearl port on the western coast. Yavana (Roman), Tamil, and Arab merchants file their cargo as numbered ledgers at the customs counter. Anjuvannam Itti Ravi's pepper ship is the first manifest stamped this season; the rest follow in the order their ships docked.
+        </p>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>Route</strong>
+            <span>The records room is just past the dockyard. The hall-keepers know the way; the path itself isn't posted at the gate.</span>
+          </div>
+          <div class="stat">
+            <strong>Weak point</strong>
+            <span>The deputy checks the slip a merchant hands him -- nothing else. Ask the right question and any ledger will be brought out.</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="hero-card">
+        <div class="panel hint">
+          <h2>Dockyard rumour</h2>
+          <p>
+            Each ledger has a single stamped page at the customs counter where any scribe may look up the cargo, broker, and tariff owed. By long custom, the ledger itself guards who may read it -- a sealed edge bearing the merchant's seal is meant to keep rival traders' eyes off another man's cargo.
+          </p>
+          <p>
+            A new deputy has replaced the senior scribe. He checks neither the seal nor the merchant's name. The ledger book only checks that <strong>a ledger number is given</strong>; the gate trusts the number, not who stands at it.
+          </p>
+        </div>
+
+        <div class="panel entry">
+          <h2>Enter the records room</h2>
+          <p>
+            The hall of ledgers is just past the dockyard gate. The path is short, but the door is unmarked -- the dockhands only tell newcomers if asked.
+          </p>
+          <a href="{{ url_for('hall') }}">Open the records room</a>
+        </div>
+      </aside>
+    </div>
+
+    <div class="divider"></div>
+    <p class="verse">
+      <span class="tamil">எண்ணைக் கேட்டால் பதிலளிக்கும் வாயில், உரிமையைக் கேட்பதில்லை.</span><br>
+      <em>"The gate answers to a number. It never asks whose name is on the ledger behind it."</em>
+    </p>
+    <div class="divider"></div>
+    <p>
+      Somewhere in the customs house is a sealed royal ledger -- the king's own record of what was smuggled, what was taxed, and what was never declared. It carries a ledger number like any other. The deputy didn't even think to look for it; he simply filed it in the regular sequence, between the Tyndis silk factor and the temple jeweller of Vañji.
+    </p>
+  </div>
+</body>
+</html>

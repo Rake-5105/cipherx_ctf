@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ledger Not Found -- Muciri Customs</title>
+  <style>
+    :root {
+      --bg: #100407;
+      --panel: rgba(31, 7, 12, 0.95);
+      --text: #edf6ff;
+      --muted: #9cb0c6;
+      --accent: #ff7180;
+      --accent-2: #ff9b85;
+      --shadow: rgba(12, 0, 3, 0.75);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 16%, rgba(220, 43, 62, 0.17), transparent 24%),
+        radial-gradient(circle at 84% 14%, rgba(255, 116, 91, 0.11), transparent 21%),
+        linear-gradient(160deg, #090103 0%, #1a0509 100%);
+      padding: 22px 24px 36px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 56px auto;
+      display: grid;
+      grid-template-columns: minmax(220px, 0.65fr) minmax(0, 1fr);
+      gap: 0;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 34px 72px var(--shadow);
+      border: 1px solid rgba(124, 247, 194, 0.12);
+      background: linear-gradient(180deg, rgba(3, 11, 20, 0.98), rgba(2, 8, 14, 0.99));
+    }
+
+    .signal {
+      padding: 34px 30px;
+      background: linear-gradient(180deg, rgba(124, 247, 194, 0.08), rgba(255, 143, 163, 0.04));
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .details {
+      padding: 34px 32px;
+      text-align: left;
+    }
+
+    h1 {
+      color: #ffffff;
+      font-size: clamp(2.2rem, 4.8vw, 4rem);
+      margin: 0 0 12px;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    p {
+      font-size: 1.04rem;
+      line-height: 1.9;
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    a:hover {
+      border-bottom-color: currentColor;
+    }
+
+    .crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .crest::before,
+    .crest::after {
+      content: "◈";
+      color: var(--accent-2);
+    }
+
+    .big-code {
+      margin: 28px 0 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: "Consolas", "Courier New", monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+    }
+
+    .crumbs {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+
+    .crumbs strong {
+      color: #ffffff;
+    }
+
+    .panel {
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    .marker {
+      display: inline-block;
+      padding: 6px 10px;
+      margin-bottom: 12px;
+      border-radius: 999px;
+      background: rgba(124, 247, 194, 0.08);
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .route {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+    }
+
+    .route::before {
+      content: "→";
+      color: var(--accent-2);
+    }
+
+    .route-link {
+      color: var(--accent);
+    }
+
+    .route-link:hover {
+      border-bottom-color: currentColor;
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        grid-template-columns: 1fr;
+        margin: 24px auto;
+      }
+
+      .signal {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .signal,
+      .details {
+        padding: 24px 20px;
+      }
+    }
+    .container { animation: rise-in .7s ease-out both; }
+    .signal { animation: signal 3.5s ease-in-out infinite; }
+    .big-code { animation: flicker 2.8s ease-in-out infinite; }
+    .panel { transition: transform .25s ease, border-color .25s ease; }
+    .panel:hover { transform: translateY(-3px); border-color: rgba(124,247,194,.28); }
+    @keyframes rise-in { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+    @keyframes signal { 50% { background-color:rgba(124,247,194,.12); } }
+    @keyframes flicker { 50% { box-shadow:0 0 25px rgba(255,143,163,.16); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+    .signal { background:linear-gradient(180deg,rgba(171,22,42,.18),rgba(93,8,19,.10)); border-color:rgba(255,113,128,.16); }
+    .container { border-color:rgba(255,113,128,.18); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="signal">
+      <div class="crest">Ledger Gap</div>
+      <div class="marker">404 / empty shelf</div>
+      <h1>No ledger with that number</h1>
+      <div class="big-code">#{{ ledger_id }}</div>
+    </section>
+
+    <section class="details">
+      <div class="panel">
+        <p>The shelf at number <strong>#{{ ledger_id }}</strong> is empty. The deputy shrugs &mdash; numbers between the registered ledgers were never bound.</p>
+        <p>Try a neighbouring number, or return to the records room and continue walking the sequence.</p>
+      </div>
+
+      <div class="crumbs">
+        <p><strong>Hint:</strong> the valid ledgers are still consecutive, so the missing shelf only means you stepped beyond the current run.</p>
+        <p class="route"><a class="route-link" href="{{ url_for('hall') }}">return to the records room</a></p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

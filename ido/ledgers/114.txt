@@ -1,0 +1,5 @@
+Arab Yūsuf ibn ʿAbd al-Raḥmān
+Camphor -- 8 chests; eaglewood -- 5 chests; saffron -- 2 vials
+Broker: Kollam Vellan
+Tariff: 1 chest of camphor, 1 of eaglewood, 1 vial of saffron
+Visibility: private
