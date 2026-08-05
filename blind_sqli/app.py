@@ -7,8 +7,16 @@ from pathlib import Path
 
 from flask import Flask, jsonify, render_template, request
 
+import os
+
 BASE_DIR = Path(__file__).resolve().parent
-DB_PATH = BASE_DIR / "ctf_sqli.sqlite3"
+
+# On Vercel, the filesystem is read-only except for /tmp.
+if os.environ.get("VERCEL"):
+    DB_PATH = Path("/tmp/ctf_sqli.sqlite3")
+else:
+    DB_PATH = BASE_DIR / "ctf_sqli.sqlite3"
+
 BACKUP_DB_PATH = BASE_DIR / "db_backup.sqlite"
 
 FLAG = "C1X{5angarn_0l1y1n_s3ya1}"
@@ -36,6 +44,11 @@ def init_database() -> None:
     """Create the SQLite database and seed rows if needed."""
     database_exists = DB_PATH.exists()
 
+    # If running on Vercel and the DB doesn't exist in /tmp yet, try copying the bundled backup.
+    if os.environ.get("VERCEL") and not database_exists and BACKUP_DB_PATH.exists():
+        shutil.copyfile(BACKUP_DB_PATH, DB_PATH)
+        database_exists = True
+
     with sqlite3.connect(DB_PATH) as connection:
         connection.execute("""
             CREATE TABLE IF NOT EXISTS users (
@@ -54,7 +67,9 @@ def init_database() -> None:
             )
             connection.commit()
 
-    if not BACKUP_DB_PATH.exists() or not database_exists:
+    # Locally, if there is no backup DB, create one from the seeded DB.
+    # We skip this on Vercel because the deployment folder is read-only.
+    if not os.environ.get("VERCEL") and (not BACKUP_DB_PATH.exists() or not database_exists):
         shutil.copyfile(DB_PATH, BACKUP_DB_PATH)
 
 
